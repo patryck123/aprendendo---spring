@@ -20,5 +20,6 @@ public class UsuarioDTO {
     }
 
     public Object getSenha() {
+        return null;
     }
 }
