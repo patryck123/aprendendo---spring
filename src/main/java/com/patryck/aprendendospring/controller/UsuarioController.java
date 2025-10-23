@@ -23,8 +23,8 @@ public class UsuarioController {
     private final JwtUtil jwtUtil;
 
     @PostMapping
-    public ResponseEntity<UsuarioService> salvaUsuario(@RequestBody UsuarioService usuarioService) {
-        return ResponseEntity.ok(usuarioService.salvausuario(usuarioService));
+    public ResponseEntity<Usuario> salvaUsuario(@RequestBody Usuario usuario) {
+        return ResponseEntity.ok(usuarioService.salvarUsuario(usuario));
     }
 
     @PostMapping("/login")
@@ -37,8 +37,8 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public ResponseEntity<Usuario> buscaUsuarioPorEmail(@RequestParam("Email") String email) throws Throwable {
-     return ResponseEntity.ok (usuarioService.buscarusuarioPorEmail(email));
+    public ResponseEntity<Usuario> buscaUsuarioPorEmail(@RequestParam("email") String email) {
+        return ResponseEntity.ok(usuarioService.buscarusuarioPorEmail(email));
 
     }
 

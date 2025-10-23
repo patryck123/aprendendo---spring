@@ -5,10 +5,10 @@ import com.patryck.aprendendospring.infrastructure.exceptions.ConflictException;
 import com.patryck.aprendendospring.infrastructure.exceptions.ResourceNotFoundException;
 import com.patryck.aprendendospring.infrastructure.respository.UsuarioRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
-
+@Service
 public class UsuarioService {
-
 
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
@@ -18,53 +18,33 @@ public class UsuarioService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public UsuarioService salvausuario(UsuarioService usuarioService) {
-        try {
-            emailexistente(usuarioRepository.getEmail());
-            Object Usuario = null;
-            salvausuario((UsuarioService) usuarioRepository).setSenha
-                    (passwordEncoder.encode(usuarioRepository.getEmail()));
-            return (UsuarioService) usuarioRepository.save(usuarioRepository);
-
-        } catch (ConflictException e) {
-            throw new ConflictException("Email ja cadastrado", e.getCause());
-
+    public Usuario salvarUsuario(Usuario usuario) {
+        if (verificaEmailExistente(usuario.getEmail())) {
+            throw new ConflictException("Email ja cadastrado: " + usuario.getEmail());
         }
 
+        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
+        return usuarioRepository.save(usuario);
     }
-
-    private void setSenha(String encode) {
-    }
-
 
     public void emailexistente(String email) {
-        try {
-            boolean existe = verificaEmailExistente(email);
-            if (existe) {
-                throw new ConflictException("Email ja cadastrado" + email);
-
-            }
-        } catch (ConflictException e) {
-            throw new ConflictException("Email ja cadastrado" + e.getCause());
+        if (verificaEmailExistente(email)) {
+            throw new ConflictException("Email ja cadastrado: " + email);
         }
-
     }
 
     public boolean verificaEmailExistente(String email) {
         return usuarioRepository.existsByEmail(email);
     }
 
-      public Usuario buscarusuarioPorEmail(String email) throws Throwable {
-        return (Usuario) usuarioRepository.findByEmail(email).orElseThrow(
-                () -> new ResourceNotFoundException("Email nao encontrado" + email));
+    public Usuario buscarusuarioPorEmail(String email) {
+        return usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Email nao encontrado: " + email));
+    }
 
-      }
-
-      public  void deletaUsuarioPorEMail(String email){
-      usuarioRepository.deleteByEmail(email);
-      }
-
-
+    public void deletaUsuarioPorEMail(String email) {
+        usuarioRepository.deleteByEmail(email);
+    }
 }
 
 

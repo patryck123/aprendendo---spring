@@ -52,8 +52,7 @@ public class Usuario implements UserDetails {
    }
 
    public String getEmail() {
-
-       return "";
+      return email;
    }
 }
 
