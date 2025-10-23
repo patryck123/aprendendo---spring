@@ -41,11 +41,11 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Lombok for boilerplate code generation -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok-maven-plugin</artifactId>
-			<version>1.18.20.0</version>
-			<scope>provided</scope>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
 		</dependency>
 
 		<dependency>
@@ -59,10 +59,16 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<!-- H2 database for tests -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
-			<version>4.0.0-M2</version>
 		</dependency>
 
 

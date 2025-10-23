@@ -13,12 +13,4 @@ public class UsuarioDTO {
 
     private String email;
     private String senha;
-
-    public Object getEmail() {
-
-        return null;
-    }
-
-    public Object getSenha() {
-    }
 }

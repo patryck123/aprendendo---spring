@@ -4,7 +4,6 @@ import com.patryck.aprendendospring.business.UsuarioService;
 import com.patryck.aprendendospring.controller.dtos.UsuarioDTO;
 import com.patryck.aprendendospring.infrastructure.entity.Usuario;
 import com.patryck.aprendendospring.infrastructure.security.JwtUtil;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,14 +16,13 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UsuarioController {
 
-    @Getter
     private final UsuarioService usuarioService;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
 
     @PostMapping
-    public ResponseEntity<UsuarioService> salvaUsuario(@RequestBody UsuarioService usuarioService) {
-        return ResponseEntity.ok(usuarioService.salvausuario(usuarioService));
+    public ResponseEntity<Usuario> salvaUsuario(@RequestBody Usuario usuario) {
+        return ResponseEntity.ok(usuarioService.salvaUsuario(usuario));
     }
 
     @PostMapping("/login")
@@ -33,12 +31,12 @@ public class UsuarioController {
                 new UsernamePasswordAuthenticationToken(usuarioDTO.getEmail(),
                         usuarioDTO.getSenha())
         );
-        return "Bearer" + jwtUtil.generateToken(authentication.getName());
+        return "Bearer " + jwtUtil.generateToken(authentication.getName());
     }
 
     @GetMapping
-    public ResponseEntity<Usuario> buscaUsuarioPorEmail(@RequestParam("Email") String email) throws Throwable {
-     return ResponseEntity.ok (usuarioService.buscarusuarioPorEmail(email));
+    public ResponseEntity<Usuario> buscaUsuarioPorEmail(@RequestParam("email") String email) {
+        return ResponseEntity.ok(usuarioService.buscarusuarioPorEmail(email));
 
     }
 
