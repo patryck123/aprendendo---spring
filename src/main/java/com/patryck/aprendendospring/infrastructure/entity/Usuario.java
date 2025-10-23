@@ -1,6 +1,5 @@
 package com.patryck.aprendendospring.infrastructure.entity;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,9 +25,9 @@ public class Usuario implements UserDetails {
    @Column(name = "nome", length = 100)
    private String nome;
    @Column(name = "email", length = 100)
-   private  String email;
-   @Column(name = "senha", length = 10)
-   private  String senha;
+   private String email;
+   @Column(name = "senha", length = 60)
+   private String senha;
    @OneToMany(cascade = CascadeType.ALL)
    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
    private List<Endereco> enderecos;
@@ -51,8 +50,23 @@ public class Usuario implements UserDetails {
       return email;
    }
 
-   public String getEmail() {
-      return email;
+   @Override
+   public boolean isAccountNonExpired() {
+      return true;
+   }
+
+   @Override
+   public boolean isAccountNonLocked() {
+      return true;
+   }
+
+   @Override
+   public boolean isCredentialsNonExpired() {
+      return true;
+   }
+
+   @Override
+   public boolean isEnabled() {
+      return true;
    }
 }
-

@@ -18,23 +18,12 @@ public class UsuarioService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public Usuario salvarUsuario(Usuario usuario) {
-        if (verificaEmailExistente(usuario.getEmail())) {
-            throw new ConflictException("Email ja cadastrado: " + usuario.getEmail());
+    public Usuario salvaUsuario(Usuario usuario) {
+        if (usuarioRepository.existsByEmail(usuario.getEmail())) {
+            throw new ConflictException("Email ja cadastrado");
         }
-
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         return usuarioRepository.save(usuario);
-    }
-
-    public void emailexistente(String email) {
-        if (verificaEmailExistente(email)) {
-            throw new ConflictException("Email ja cadastrado: " + email);
-        }
-    }
-
-    public boolean verificaEmailExistente(String email) {
-        return usuarioRepository.existsByEmail(email);
     }
 
     public Usuario buscarusuarioPorEmail(String email) {
@@ -46,12 +35,3 @@ public class UsuarioService {
         usuarioRepository.deleteByEmail(email);
     }
 }
-
-
-
-
-
-
-
-
-
